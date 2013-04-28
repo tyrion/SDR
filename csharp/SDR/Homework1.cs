@@ -6,10 +6,11 @@ using System.IO;
 
 namespace SDR
 {
-    class Homework1
+    public class Homework1
     {
         public static void Main(string[] args)
         {
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             if (args.Length < 3)
             {
                 Console.WriteLine("Numero errato di argomenti!");
@@ -28,8 +29,10 @@ namespace SDR
             // Costruisco la Sinc e la memorizzo dentro "ys"
             Func<int, double> Sinc = (n) =>
             {
+                if (n == 0) return 1;
+                if (n % f1 == 0) return 0;
                 double x = Math.PI * n / f1;
-                return x == 0 ? 1 : Math.Sin(x) / x;
+                return Math.Sin(x) / x;
             };
 
             int maxlen = 10 * f1 + 1;
@@ -45,8 +48,8 @@ namespace SDR
             var convoluzione = Convoluzione(espansione, ys, maxlen);
             var decimazione = Decimazione(convoluzione, f2);
 
-            foreach (var o in decimazione)
-                Console.WriteLine(o);
+            foreach (var o in convoluzione)
+                Console.WriteLine("{0:R}", o);
             
         }
 
@@ -67,7 +70,7 @@ namespace SDR
         {
             string line;
             while (null != (line = input.ReadLine()))
-                yield return Double.Parse(line, CultureInfo.InvariantCulture);
+                yield return Double.Parse(line);
         }
 
         public static IEnumerable<double> Espansione(IEnumerable<double> xs, int f)
@@ -96,13 +99,18 @@ namespace SDR
             var y_deque = new Deque<double>(maxlen);
 
             // Parte iniziale: segnale e sinc parzialmente sovrapposti.
+            // Saltiamo la coda iniziale, ovvero i campioni per i quali t < 0.
+            int t = (1 - maxlen) / 2;
             foreach (var y in ys)
             {
                 if (signal.MoveNext())
                 {
                     x_deque.PushRight(signal.Current);
                     y_deque.PushLeft(y);
-                    yield return SommaProdotti(x_deque, y_deque);
+                    if (t == 0)
+                        yield return SommaProdotti(x_deque, y_deque);
+                    else
+                        t++;
                 }
                 else throw new Exception("Il segnale è più corto della Sinc");
             }
@@ -114,7 +122,8 @@ namespace SDR
             }
 
             // Parte finale: segnale terminato, parzialmente sovrapposti.
-            for (int i = 0; i < maxlen-1; i++)
+            // Il "/ 2" ci permette di saltare la coda finale.
+            for (int i = 0; i < (maxlen - 1) / 2; i++)
             {
                 x_deque.PopLeft();
                 yield return SommaProdotti(x_deque, y_deque);
