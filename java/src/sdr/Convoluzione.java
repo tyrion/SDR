@@ -17,7 +17,18 @@ public class Convoluzione implements Iterable<Double>, Iterator<Double> {
 		this.ys = ys.iterator();
 		this.x_deque = new ArrayDeque<>(maxlen);
 		this.y_deque = new ArrayDeque<>(maxlen);
-		this.counter = maxlen-1;
+		this.counter = (maxlen - 1) / 2;
+		
+		saltaCodaIniziale();
+	}
+	
+	private void saltaCodaIniziale() {
+		for (int t = counter; t != 0; t--) {
+			if (ys.hasNext() && xs.hasNext()) {
+				x_deque.addLast(xs.next());
+				y_deque.addFirst(ys.next());
+			}
+		}
 	}
 
 	@Override
