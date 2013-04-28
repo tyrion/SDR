@@ -20,7 +20,8 @@ public class Homework1 {
 		f1 /= gcd;
 		f2 /= gcd;
 		
-		System.out.printf("F1/F2 => %d/%d\n", f1, f2);
+		System.out.printf("F1/F2 => %d/%d", f1, f2);
+		System.out.println();
 		
 		Iterable<Double> ys = new Sinc(f1);
 		int maxlen = 10 * f1 + 1;
