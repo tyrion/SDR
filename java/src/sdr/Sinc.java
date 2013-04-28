@@ -9,6 +9,13 @@ public class Sinc implements Iterable<Double> {
 	public Sinc(int f) {
 		this.f = f;
 	}
+	
+	public double getValue(int n) {
+		if (n == 0) return 1.0;
+		if (n % f == 0) return 0.0;
+		double x =  Math.PI * n / f;
+		return Math.sin(x) / x;
+	}
 
 	@Override
 	public Iterator<Double> iterator() {
@@ -21,10 +28,8 @@ public class Sinc implements Iterable<Double> {
 			}
 
 			@Override
-			public Double next() {
-				double x = Math.PI * current / f;
-				current++;
-				return x == 0 ? 1 : Math.sin(x) / x;
+			public Double next() {				
+				return getValue(current++);
 			}
 
 			@Override
