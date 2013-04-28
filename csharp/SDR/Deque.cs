@@ -58,8 +58,7 @@ namespace SDR
 
         private int Dec(int i)
         {
-            i--;
-            return i - (int)Math.Floor((double)i / size) * size;
+            return (i == 0 ? size : i) - 1;  
         }
 
         public IEnumerator<E> GetEnumerator()
