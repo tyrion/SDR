@@ -44,7 +44,7 @@ public class Convoluzione implements Iterable<Double>, Iterator<Double> {
 				y_deque.addFirst(ys.next());
 				return sommaProdotti(x_deque, y_deque);
 				
-			} else throw new NoSuchElementException("Il segnale è più corto della Sinc");
+			} else throw new NoSuchElementException("Il segnale Ã¨ piÃ¹ corto della Sinc");
 
 		} else if (xs.hasNext()) {
 			x_deque.pollFirst();
