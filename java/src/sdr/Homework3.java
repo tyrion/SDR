@@ -46,11 +46,11 @@ public class Homework3 {
 		if (hw2) {
 			getParams();
 			if (prima)
-				out = homework2(new Modulazione(real, imag));
+				out = homework2(new Demodulazione(real, imag));
 			else
-				out = new Modulazione(homework2(real), homework2(imag));
+				out = new Demodulazione(homework2(real), homework2(imag));
 		} else
-			out = new Modulazione(real, imag);
+			out = new Demodulazione(real, imag);
 
 		return out;
 	}

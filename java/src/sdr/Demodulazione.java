@@ -2,13 +2,13 @@ package sdr;
 
 import java.util.Iterator;
 
-public class Modulazione implements Iterable<Double>, Iterator<Double> {
+public class Demodulazione implements Iterable<Double>, Iterator<Double> {
 	
 	private Iterator<Double> real;
 	private Iterator<Double> imag;
 	private Complex j;
 
-	public Modulazione(Iterable<Double> real, Iterable<Double> imag) {
+	public Demodulazione(Iterable<Double> real, Iterable<Double> imag) {
 		this.real = real.iterator();
 		this.imag = imag.iterator();
 		
