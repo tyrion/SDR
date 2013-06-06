@@ -57,6 +57,7 @@ public class Console extends BufferedReader {
 				switch (token.toLowerCase()) {
 					case "n":
 						return false;
+					case "s":
 					case "y":
 						return true;
 					default:
