@@ -28,6 +28,7 @@ public class Console extends BufferedReader {
 			try {
 				line = readLine();
 			} catch (IOException e) {
+				e.printStackTrace();
 				throw new NoSuchElementException();
 			}
 			try {
